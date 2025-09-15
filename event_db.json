@@ -1,0 +1,35 @@
+{
+  "event": {
+    "name": "Techpoint Build 2023 (Mock)",
+    "start_date": "2023-11-15",
+    "end_date": "2023-11-16",
+    "venue": {
+      "name": "Landmark Centre, Lagos",
+      "address": "8 Water Corporation Rd, Oniru, Victoria Island, Lagos",
+      "city": "Lagos"
+    },
+    "currency": "NGN",
+    "ticket_price": {
+      "general": 15000,
+      "student": 8000,
+      "vip": 35000
+    },
+    "contact_email": "info@techpoint.africa"
+  },
+  "speakers": [
+    {"id": 1, "name": "Adaeze Okonkwo", "title": "Founder, StartupX", "bio": "Startup founder and investor."},
+    {"id": 2, "name": "Ibrahim Musa", "title": "CTO, FinTechCo", "bio": "Tech lead in payments."},
+    {"id": 3, "name": "Ngozi Eze", "title": "AI Researcher", "bio": "ML researcher focused on NLP."}
+  ],
+  "sessions": [
+    {"id": "S1", "title": "Keynote: Building for Africa", "speaker_id": 1, "time": "2023-11-15T09:00:00", "track": "Leadership", "duration_mins": 45, "location":"Main Hall"},
+    {"id": "S2", "title": "Payments at Scale", "speaker_id": 2, "time": "2023-11-15T10:00:00", "track": "Fintech", "duration_mins": 40, "location":"Room A"},
+    {"id": "S3", "title": "Intro to Practical NLP", "speaker_id": 3, "time": "2023-11-15T11:00:00", "track": "AI", "duration_mins": 50, "location":"Room B"},
+    {"id": "S4", "title": "Investor Q&A", "speaker_id": 1, "time": "2023-11-16T14:00:00", "track": "Funding", "duration_mins": 60, "location":"Main Hall"}
+  ],
+  "faqs": [
+    {"q":"When does the event start?", "a":"Techpoint Build 2023 starts on 15 November 2023 at 09:00 AM."},
+    {"q":"How much is a general ticket?", "a":"General ticket costs 15,000 NGN."},
+    {"q":"Where is the event venue?", "a":"Landmark Centre, Victoria Island, Lagos."}
+  ]
+}
