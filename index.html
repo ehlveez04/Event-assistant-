@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Event Assistant Prototype</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #chat { border: 1px solid #ddd; padding: 10px; height: 400px; overflow-y: auto; }
+    .msg { margin: 8px 0; }
+    .user { text-align: right; color: white; background: #007bff; display:inline-block; padding:6px 10px; border-radius:8px;}
+    .bot { text-align: left; background: #f1f1f1; display:inline-block; padding:6px 10px; border-radius:8px;}
+    #controls { margin-top: 10px; }
+    button.quick { margin-right: 6px; }
+  </style>
+</head>
+<body>
+  <h2>Event Assistant — Prototype (Techpoint Build)</h2>
+  <div id="chat"></div>
+
+  <div id="controls">
+    <input id="input" style="width:60%" placeholder="Ask about agenda, tickets, speakers, or recommend sessions..." />
+    <button id="send">Send</button>
+    <br/><br/>
+    Quick actions:
+    <button class="quick" data-q="Show agenda">Show agenda</button>
+    <button class="quick" data-q="How much is a ticket?">Ticket price</button>
+    <button class="quick" data-q="I am interested in AI">Recommend AI sessions</button>
+    <button class="quick" data-q="Who are the speakers?">Speakers</button>
+  </div>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('input');
+
+    function addMessage(text, who='bot') {
+      const div = document.createElement('div'); div.className='msg';
+      const span = document.createElement('span');
+      span.className = who==='user'? 'user':'bot';
+      span.innerText = text;
+      div.appendChild(span);
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    async function sendMessage(text) {
+      addMessage(text, 'user');
+      try {
+        const res = await fetch('http://localhost:8000/chat', {
+          method:'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ message: text })
+        });
+        const j = await res.json();
+        addMessage(j.reply || "No reply", 'bot');
+      } catch (err) {
+        addMessage("Error connecting to server. Start backend (python app.py) and ensure uvicorn is running on port 8000.", 'bot');
+      }
+    }
+
+    document.getElementById('send').addEventListener('click', () => {
+      const t = input.value.trim(); if(!t) return;
+      sendMessage(t); input.value = '';
+    });
+
+    input.addEventListener('keypress', (e)=> { if(e.key==='Enter'){ e.preventDefault(); document.getElementById('send').click(); } });
+
+    document.querySelectorAll('button.quick').forEach(b=>{
+      b.addEventListener('click', ()=> sendMessage(b.dataset.q));
+    });
+
+    // welcome
+    addMessage("Hi — I'm the Techpoint Build assistant. Ask me about the agenda, tickets, or request recommendations.", 'bot');
+  </script>
+</body>
+</html>
